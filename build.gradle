@@ -6,7 +6,6 @@ plugins {
 
 group = 'com.coffeeshop'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
 
 configurations {
 	compileOnly {
@@ -25,12 +24,14 @@ ext {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-graphql'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.hibernate.validator:hibernate-validator:8.0.0.Final'
+
 	compileOnly 'org.projectlombok:lombok'
 	implementation 'org.postgresql:postgresql:42.4.0'
 	annotationProcessor 'org.projectlombok:lombok'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.springframework.graphql:spring-graphql-test'
 	testImplementation 'org.testcontainers:junit-jupiter'
 	testImplementation 'org.testcontainers:postgresql'
 }
@@ -47,6 +48,6 @@ tasks.named('test') {
 
 test {
 	filter {
-		excludeTestsMatching "com.coffeeshop.repository.*"
+		//excludeTestsMatching "com.coffeeshop.repository.*"
 	}
 }
