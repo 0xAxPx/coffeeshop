@@ -1,6 +1,6 @@
 package com.coffeeshop.repository;
 
-import com.coffeeshop.persistence.Coffee;
+import com.coffeeshop.model.Coffee;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

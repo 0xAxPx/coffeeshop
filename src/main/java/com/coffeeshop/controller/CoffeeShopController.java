@@ -1,48 +1,49 @@
 package com.coffeeshop.controller;
 
 
-import com.coffeeshop.persistence.Coffee;
+import com.coffeeshop.model.Coffee;
 import com.coffeeshop.repository.CoffeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
-@RestController
+@Controller
 public class CoffeeShopController {
 
     @Autowired
     CoffeeRepository repository;
 
-    @GetMapping("/")
-    private String indexPage() {
-        return "Coffee Shop\t" + LocalDateTime.now();
+    @GetMapping("/home/all")
+    private String index(Model model, Coffee coffee) {
+        model.addAttribute("message", "This is Template example!");
+        List<Coffee> coffeeList = repository.findAll();
+        if (!coffeeList.isEmpty()) {
+            model.addAttribute("coffee_drinks", coffeeList);
+        }
+        return "all";
     }
 
-    @GetMapping("/coffee")
-    public ResponseEntity<List<Coffee>> getCoffeeList(Model model) {
-        List<Coffee> coffee = repository.findAll();
-        if (!coffee.isEmpty()) {
-            model.addAttribute("list", coffee);
-            return new ResponseEntity<List<Coffee>>(coffee, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
+    @GetMapping("/home/{id}")
+    public String show(@PathVariable("id") long id, Model model) {
+        model.addAttribute("coffee", repository.findById(id));
+        return "home";
     }
 
-    @GetMapping("/coffee/{id}")
-    public ResponseEntity<Coffee> getCoffeeById(@PathVariable("id") long id, Model model) {
-        Optional<Coffee> coffee = repository.findById(id);
-        if (coffee.isPresent()) {
-            model.addAttribute(String.valueOf(id), coffee);
-            return new ResponseEntity(coffee.get(), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    @GetMapping("/home")
+    public String newCoffee(Model model) {
+        model.addAttribute("coffee", new Coffee());
+        return "home";
     }
+
+    @PostMapping("/home")
+    public String addCoffee(@ModelAttribute("coffee") Coffee coffee) {
+        System.out.format("%s - coffee object %s\n", LocalDateTime.now(), coffee.toString());
+        repository.save(coffee);
+        return "redirect:home/all";
+    }
+
 }

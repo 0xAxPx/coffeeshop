@@ -1,4 +1,4 @@
-package com.coffeeshop.persistence;
+package com.coffeeshop.model;
 
 
 import lombok.Data;
@@ -28,6 +28,6 @@ public class Coffee {
         this.description = description;
     }
 
-    protected Coffee() {};
+    public Coffee() {};
 
 }

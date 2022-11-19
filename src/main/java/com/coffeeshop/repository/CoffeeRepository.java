@@ -1,7 +1,7 @@
 package com.coffeeshop.repository;
 
 
-import com.coffeeshop.persistence.Coffee;
+import com.coffeeshop.model.Coffee;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
