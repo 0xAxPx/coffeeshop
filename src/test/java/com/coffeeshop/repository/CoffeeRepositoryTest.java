@@ -57,6 +57,4 @@ public class CoffeeRepositoryTest {
         Assertions.assertThat(repository.findById(4L).get().getDrink()).isEqualTo(doppio.getDrink());
         Assertions.assertThat(repository.findById(4L).get().getDescription()).isEqualTo(doppio.getDescription());
     }
-
-
 }

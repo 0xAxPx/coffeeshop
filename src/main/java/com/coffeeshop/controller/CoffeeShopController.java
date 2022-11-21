@@ -19,36 +19,36 @@ public class CoffeeShopController {
 
     @GetMapping("/")
     private String home() {
-        return "redirect:home/coffee";
+        return "redirect:coffee/show";
     }
 
-    @GetMapping("/home/coffee")
+    @GetMapping("/coffee/show")
     private String index(Model model, Coffee coffee) {
         model.addAttribute("message", "This is Template example!");
         List<Coffee> coffeeList = repository.findAll();
         if (!coffeeList.isEmpty()) {
             model.addAttribute("coffee_drinks", coffeeList);
         }
+        return "show";
+    }
+
+    @GetMapping("/coffee/{id}")
+    public String show(@PathVariable("id") long id, Model model) {
+        model.addAttribute("coffee", repository.findById(id));
         return "coffee";
     }
 
-    @GetMapping("/home/{id}")
-    public String show(@PathVariable("id") long id, Model model) {
-        model.addAttribute("coffee", repository.findById(id));
-        return "home";
-    }
-
-    @GetMapping("/home")
+    @GetMapping("/coffee")
     public String newCoffee(Model model) {
         model.addAttribute("coffee", new Coffee());
-        return "home";
+        return "coffee";
     }
 
-    @PostMapping("/home")
+    @PostMapping("/coffee")
     public String addCoffee(@ModelAttribute("coffee") Coffee coffee) {
         System.out.format("%s - coffee object %s\n", LocalDateTime.now(), coffee.toString());
         repository.save(coffee);
-        return "redirect:home/coffee";
+        return "redirect:coffee/show";
     }
 
 }
