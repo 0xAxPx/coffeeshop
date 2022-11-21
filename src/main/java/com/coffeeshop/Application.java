@@ -20,15 +20,15 @@ public class Application {
 	/*
 	Add some sql script at start
 	 */
-	@Bean
-	public DataSourceInitializer dataSourceInitializer(@Qualifier("dataSource") final DataSource dataSource) {
-		ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator();
-		resourceDatabasePopulator.addScript(new ClassPathResource("/schema.sql"));
-		DataSourceInitializer dataSourceInitializer = new DataSourceInitializer();
-		dataSourceInitializer.setDataSource(dataSource);
-		dataSourceInitializer.setDatabasePopulator(resourceDatabasePopulator);
-		return dataSourceInitializer;
-	}
+//	@Bean
+//	public DataSourceInitializer dataSourceInitializer(@Qualifier("dataSource") final DataSource dataSource) {
+//		ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator();
+//		resourceDatabasePopulator.addScript(new ClassPathResource("/schema.sql"));
+//		DataSourceInitializer dataSourceInitializer = new DataSourceInitializer();
+//		dataSourceInitializer.setDataSource(dataSource);
+//		dataSourceInitializer.setDatabasePopulator(resourceDatabasePopulator);
+//		return dataSourceInitializer;
+//	}
 
 	/**
 	 * To initialize some test data before spring finishes its startup there're ApplicationRunner and CommandLineRunner interfaces

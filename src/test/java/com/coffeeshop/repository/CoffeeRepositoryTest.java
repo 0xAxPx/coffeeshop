@@ -51,10 +51,10 @@ public class CoffeeRepositoryTest {
         Coffee cappuccino = repository.save(new Coffee("Cappuccino", "Cappuccino is the base!"));
         Coffee doppio = repository.save(new Coffee("Doppio", "Doppio"));
         Assertions.assertThat(repository.findById(3L).get().getId()).isEqualTo(cappuccino.getId());
-        Assertions.assertThat(repository.findById(3L).get().getCoffee()).isEqualTo(cappuccino.getCoffee());
+        Assertions.assertThat(repository.findById(3L).get().getDrink()).isEqualTo(cappuccino.getDrink());
         Assertions.assertThat(repository.findById(3L).get().getDescription()).isEqualTo(cappuccino.getDescription());
         Assertions.assertThat(repository.findById(4L).get().getId()).isEqualTo(doppio.getId());
-        Assertions.assertThat(repository.findById(4L).get().getCoffee()).isEqualTo(doppio.getCoffee());
+        Assertions.assertThat(repository.findById(4L).get().getDrink()).isEqualTo(doppio.getDrink());
         Assertions.assertThat(repository.findById(4L).get().getDescription()).isEqualTo(doppio.getDescription());
     }
 

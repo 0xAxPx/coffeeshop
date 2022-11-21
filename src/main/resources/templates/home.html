@@ -19,13 +19,8 @@
 
     <form th:method="POST" th:action="@{/home}" th:object="${coffee}">
         <div class="form-group">
-            <label for="id">ID of Coffee</label>
-            <input type="text" th:field="*{id}" id="id" class="form-control" placeholder="Enter id of coffee drink">
-            </br>
-        </div>
-        <div class="form-group">
-            <label for="coffee">Name of Coffee</label>
-            <input type="text" th:field="*{coffee}" id="coffee" class="form-control" placeholder="Enter name of coffee drink">
+            <label for="drink">Name of Coffee</label>
+            <input type="text" th:field="*{drink}" id="drink" class="form-control" placeholder="Enter name of coffee drink">
             </br>
         </div>
         <div class="form-group">
@@ -36,23 +31,6 @@
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 
-
-<!--<table class="table">-->
-<!--    <thead>-->
-<!--    <tr>-->
-<!--        <th scope="col">#</th>-->
-<!--        <th scope="col">Coffee Name</th>-->
-<!--        <th scope="col">Description</th>-->
-<!--    </tr>-->
-<!--    </thead>-->
-<!--    <tbody>-->
-<!--    <tr th:each="drink, iterator : ${coffee_drinks}">-->
-<!--        <th th:text="${iterator.index} + 1" scope="row"></th>-->
-<!--        <td th:text="${drink.coffee}"></td>-->
-<!--        <td th:text="${drink.description}"></td>-->
-<!--    </tr>-->
-<!--    </tbody>-->
-<!--</table>-->
 </div>
 </body>
 </html>

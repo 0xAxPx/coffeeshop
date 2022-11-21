@@ -17,14 +17,19 @@ public class CoffeeShopController {
     @Autowired
     CoffeeRepository repository;
 
-    @GetMapping("/home/all")
+    @GetMapping("/")
+    private String home() {
+        return "redirect:home/coffee";
+    }
+
+    @GetMapping("/home/coffee")
     private String index(Model model, Coffee coffee) {
         model.addAttribute("message", "This is Template example!");
         List<Coffee> coffeeList = repository.findAll();
         if (!coffeeList.isEmpty()) {
             model.addAttribute("coffee_drinks", coffeeList);
         }
-        return "all";
+        return "coffee";
     }
 
     @GetMapping("/home/{id}")
@@ -43,7 +48,7 @@ public class CoffeeShopController {
     public String addCoffee(@ModelAttribute("coffee") Coffee coffee) {
         System.out.format("%s - coffee object %s\n", LocalDateTime.now(), coffee.toString());
         repository.save(coffee);
-        return "redirect:home/all";
+        return "redirect:home/coffee";
     }
 
 }

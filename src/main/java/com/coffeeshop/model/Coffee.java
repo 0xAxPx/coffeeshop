@@ -19,12 +19,12 @@ public class Coffee {
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
     @Column(name = "coffee_drink")
-    String coffee;
+    String drink;
     @Column(name = "description")
     String description;
 
-    public Coffee(String coffee, String description) {
-        this.coffee = coffee;
+    public Coffee(String drink, String description) {
+        this.drink = drink;
         this.description = description;
     }
 
