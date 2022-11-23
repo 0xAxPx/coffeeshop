@@ -7,9 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -32,7 +34,8 @@ public class CoffeeShopController {
     }
 
     @PostMapping("/saveCoffee")
-    public String saveCoffee(@ModelAttribute("coffee") Coffee coffee) {
+    public String saveCoffee(@ModelAttribute("coffee") @Valid Coffee coffee, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) return "/new_coffee";
         service.save(coffee);
         return "redirect:/";
     }

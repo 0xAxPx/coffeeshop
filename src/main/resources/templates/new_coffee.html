@@ -15,7 +15,9 @@
 		<h2>Add Coffee</h2>
 		<form action="#" th:action="@{/saveCoffee}" th:object="${coffee}" method="POST">
 			<input type="text" th:field="*{drink}" placeholder="Coffee Type" class="form-control mb-4 col-4">
+			<div style="color:red" th:if="${#fields.hasErrors('drink')}" th:errors="*{drink}">Coffee Type Error</div>
 			<input type="text" th:field="*{description}" placeholder="Coffee Description" class="form-control mb-4 col-4">
+			<div style="color:red" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Coffee Description Error</div>
 			<button type="submit" class="btn btn-info col-2">Add Coffee</button>
 		</form>
 		<hr>

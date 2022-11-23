@@ -4,6 +4,8 @@ package com.coffeeshop.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 /**
  * Hibernate and Spring/JPA needs to have default constructor,
@@ -18,9 +20,15 @@ public class Coffee {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
-    @Column(name = "coffee_drink", length = 30)
+
+    @NotEmpty(message = "Coffee type can't be empty")
+    @Size(min = 5, max = 30)
+    @Column(name = "coffee_drink")
     String drink;
-    @Column(name = "description", length = 256)
+
+    @NotEmpty(message = "Coffee description can't be empty")
+    @Size(min = 5, max = 256)
+    @Column(name = "description")
     String description;
 
     public Coffee(String drink, String description) {
