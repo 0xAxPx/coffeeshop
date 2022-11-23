@@ -2,53 +2,70 @@ package com.coffeeshop.controller;
 
 
 import com.coffeeshop.model.Coffee;
-import com.coffeeshop.repository.CoffeeRepository;
+import com.coffeeshop.service.CoffeeShopService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
+
 import java.util.List;
 
 @Controller
 public class CoffeeShopController {
 
     @Autowired
-    CoffeeRepository repository;
+    CoffeeShopService service;
 
     @GetMapping("/")
-    private String home() {
-        return "redirect:coffee/show";
+    public String viewHomePage(Model model) {
+        return findPaginated(1, "drink", "asc", model);
     }
 
-    @GetMapping("/coffee/show")
-    private String index(Model model, Coffee coffee) {
-        model.addAttribute("message", "This is Template example!");
-        List<Coffee> coffeeList = repository.findAll();
-        if (!coffeeList.isEmpty()) {
-            model.addAttribute("coffee_drinks", coffeeList);
-        }
-        return "show";
+    @GetMapping("/showNewForm")
+    public String showNewCoffeeForm(Model model) {
+        // create model attribute to bind form data
+        Coffee coffee = new Coffee();
+        model.addAttribute("coffee", coffee);
+        return "new_coffee";
     }
 
-    @GetMapping("/coffee/{id}")
-    public String show(@PathVariable("id") long id, Model model) {
-        model.addAttribute("coffee", repository.findById(id));
-        return "coffee";
+    @PostMapping("/saveCoffee")
+    public String saveCoffee(@ModelAttribute("coffee") Coffee coffee) {
+        service.save(coffee);
+        return "redirect:/";
     }
 
-    @GetMapping("/coffee")
-    public String newCoffee(Model model) {
-        model.addAttribute("coffee", new Coffee());
-        return "coffee";
+    @GetMapping("/showFormForUpdate/{id}")
+    public String showFormForUpdate(@PathVariable ( value = "id") long id, Model model) {
+        Coffee coffee = service.findById(id);
+        model.addAttribute("coffee", coffee);
+        return "update_coffee";
     }
 
-    @PostMapping("/coffee")
-    public String addCoffee(@ModelAttribute("coffee") Coffee coffee) {
-        System.out.format("%s - coffee object %s\n", LocalDateTime.now(), coffee.toString());
-        repository.save(coffee);
-        return "redirect:coffee/show";
+    @GetMapping("/deleteCoffee/{id}")
+    public String deleteCoffee(@PathVariable (value = "id") long id) {
+        service.delete(id);
+        return "redirect:/";
     }
 
+
+    @GetMapping("/page/{pageNo}")
+    public String findPaginated(@PathVariable (value = "pageNo") int pageNo,
+                                @RequestParam("sortField") String sortField,
+                                @RequestParam("sortDir") String sortDir,
+                                Model model) {
+        int pageSize = 10;
+        Page<Coffee> page = service.findPaginated(pageNo, pageSize, sortField, sortDir);
+        List<Coffee> listCoffee = page.getContent();
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("totalItems", page.getTotalElements());
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDir", sortDir);
+        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+        model.addAttribute("listCoffee", listCoffee);
+        return "index";
+    }
 }

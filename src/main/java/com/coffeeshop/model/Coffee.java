@@ -12,15 +12,15 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "coffee_drinks")
+@Table(name = "coffee_drinks", schema = "barista_owner")
 public class Coffee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
-    @Column(name = "coffee_drink")
+    @Column(name = "coffee_drink", length = 30)
     String drink;
-    @Column(name = "description")
+    @Column(name = "description", length = 256)
     String description;
 
     public Coffee(String drink, String description) {

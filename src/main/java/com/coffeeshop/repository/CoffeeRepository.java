@@ -5,6 +5,8 @@ import com.coffeeshop.model.Coffee;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
+
 /**
  * In JPA we have CRUDRepository and JPARepository
  * CrudRepository interface mainly provides CRUD operations
@@ -12,7 +14,8 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository
-public interface CoffeeRepository extends JpaRepository<Coffee,Long> {
+@Transactional
+public interface CoffeeRepository extends JpaRepository<Coffee, Long> {
 
 
 }

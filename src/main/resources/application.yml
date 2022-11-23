@@ -11,5 +11,9 @@ spring:
   properties:
     hibernate:
       default_schema: barista_owner
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
 server:
   port: 8081
