@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
-<title>Employee Management System</title>
+<title>Coffee Stars</title>
 	<link rel="stylesheet"
 		  href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
 		  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
@@ -18,6 +18,8 @@
 			<div style="color:red" th:if="${#fields.hasErrors('drink')}" th:errors="*{drink}">Coffee Type Error</div>
 			<input type="text" th:field="*{description}" placeholder="Coffee Description" class="form-control mb-4 col-4">
 			<div style="color:red" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Coffee Description Error</div>
+			<input type="text" th:field="*{address}" placeholder="Coffee address" class="form-control mb-4 col-4">
+			<div style="color:red" th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Coffee Address Error</div>
 			<button type="submit" class="btn btn-info col-2">Add Coffee</button>
 		</form>
 		<hr>

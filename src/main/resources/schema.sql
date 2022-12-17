@@ -1,9 +1,9 @@
 delete from barista_owner.coffee_drinks;
-insert into barista_owner.coffee_drinks(id, coffee_drink, description)
-values (1, 'Cappuccino', 'Cappuccino description');
-insert into barista_owner.coffee_drinks(id, coffee_drink, description)
-values (2, 'Late', 'Late description');
-insert into barista_owner.coffee_drinks(id, coffee_drink, description)
-values (3, 'Macchiato', 'Macchiato description');
-insert into barista_owner.coffee_drinks(id, coffee_drink, description)
-values (4, 'Espresso', 'Espresso description');
+insert into barista_owner.coffee_drinks(coffee_drink, description, address)
+values ('Cappuccino', 'Cappuccino description', 'Brazil');
+insert into barista_owner.coffee_drinks(coffee_drink, description, address)
+values ('Late', 'Late description', 'Brazil');
+insert into barista_owner.coffee_drinks(coffee_drink, description, address)
+values ('Macchiato', 'Macchiato description', 'Brazil');
+insert into barista_owner.coffee_drinks(coffee_drink, description, address)
+values ('Espresso', 'Espresso description', 'Brazil');

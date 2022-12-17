@@ -48,6 +48,6 @@ tasks.named('test') {
 
 test {
 	filter {
-		excludeTestsMatching "com.coffeeshop.repository.*"
+		//excludeTestsMatching "com.coffeeshop.repository.*"
 	}
 }

@@ -19,7 +19,10 @@
 						<a th:href="@{'/page/' + ${currentPage} + '?sortField=drink&sortDir=' + ${reverseSortDir}}">Coffee Type</a>
 					</th>
 					<th>
-					<a th:href="@{'/page/' + ${currentPage} + '?sortField=description&sortDir=' + ${reverseSortDir}}">Coffee Description</a>
+						<a th:href="@{'/page/' + ${currentPage} + '?sortField=description&sortDir=' + ${reverseSortDir}}">Coffee Description</a>
+					</th>
+					<th>
+						<a th:href="@{'/page/' + ${currentPage} + '?sortField=address&sortDir=' + ${reverseSortDir}}">Address</a>
 					</th>
 					<th> Actions </th>
 				</tr>
@@ -28,6 +31,7 @@
 				<tr th:each="coffee : ${listCoffee}">
 					<td th:text="${coffee.drink}"></td>
 					<td th:text="${coffee.description}"></td>
+					<td th:text="${coffee.address}"></td>
 					<td><a th:href="@{/showFormForUpdate/{id}(id=${coffee.id})}" class="btn btn-primary">Update</a>
 					    <a th:href="@{/deleteCoffee/{id}(id=${coffee.id})}" class="btn btn-danger">Delete</a>
 					</td>
