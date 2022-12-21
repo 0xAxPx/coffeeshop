@@ -34,6 +34,9 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.testcontainers:junit-jupiter'
 	testImplementation 'org.testcontainers:postgresql'
+	implementation 'org.mockito:mockito-junit-jupiter:4.10.0'
+	implementation 'org.junit.jupiter:junit-jupiter-api:5.9.1'
+
 }
 
 dependencyManagement {

@@ -17,13 +17,14 @@ import java.util.Optional;
 
 @Service
 public class CoffeeShopService implements IShopService<Coffee> {
-    private final CoffeeRepository repository;
+    private CoffeeRepository repository;
 
     @Autowired
     public CoffeeShopService(CoffeeRepository repository) {
         this.repository = repository;
     }
 
+    @Transactional
     public Coffee save(Coffee coffee) {
         Coffee saved = repository.save(coffee);
         System.out.format("Coffee saved : %s\n", saved);
@@ -45,15 +46,18 @@ public class CoffeeShopService implements IShopService<Coffee> {
         return updated;
     }
 
+    @Transactional
     public List<Coffee> findAll() {
         return repository.findAll();
     }
 
+    @Transactional
     public Coffee findById(Long id) {
         Optional<Coffee> coffee = repository.findById(id);
         return coffee.orElse(null);
     }
     @Override
+    @Transactional
     public Coffee findByName(String name) {
         Optional<Coffee> coffee = repository.findAll().stream().filter(c -> c.getDrink().equalsIgnoreCase(name)).findFirst();
         return coffee.orElse(null);
@@ -71,6 +75,7 @@ public class CoffeeShopService implements IShopService<Coffee> {
         repository.deleteAll();
     }
 
+    @Transactional
     public void delete(Coffee coffee) {
         repository.delete(coffee);
     }
