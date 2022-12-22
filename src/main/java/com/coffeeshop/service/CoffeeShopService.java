@@ -10,12 +10,14 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
 @Service
+@Transactional(rollbackFor = SQLException.class)
 public class CoffeeShopService implements IShopService<Coffee> {
     private CoffeeRepository repository;
 
@@ -24,14 +26,12 @@ public class CoffeeShopService implements IShopService<Coffee> {
         this.repository = repository;
     }
 
-    @Transactional
     public Coffee save(Coffee coffee) {
         Coffee saved = repository.save(coffee);
         System.out.format("Coffee saved : %s\n", saved);
         return saved;
     }
 
-    @Transactional
     public Coffee update(Coffee coffee) {
         System.out.format("Updating coffee:%s\n", coffee);
         Coffee updated = null;
@@ -40,24 +40,21 @@ public class CoffeeShopService implements IShopService<Coffee> {
             toUpdate.setDrink(coffee.getDrink());
             toUpdate.setDescription(coffee.getDescription());
             toUpdate.setAddress(coffee.getAddress());
-            updated = save(coffee);
-            System.out.format("Coffee updated : %s\n", updated);
+            updated = repository.save(coffee);
         }
         return updated;
     }
 
-    @Transactional
     public List<Coffee> findAll() {
         return repository.findAll();
     }
 
-    @Transactional
     public Coffee findById(Long id) {
         Optional<Coffee> coffee = repository.findById(id);
         return coffee.orElse(null);
     }
+
     @Override
-    @Transactional
     public Coffee findByName(String name) {
         Optional<Coffee> coffee = repository.findAll().stream().filter(c -> c.getDrink().equalsIgnoreCase(name)).findFirst();
         return coffee.orElse(null);
@@ -75,9 +72,16 @@ public class CoffeeShopService implements IShopService<Coffee> {
         repository.deleteAll();
     }
 
-    @Transactional
     public void delete(Coffee coffee) {
-        repository.delete(coffee);
+        if (Objects.nonNull(findById(coffee.getId()))) {
+            repository.delete(coffee);
+        }
+    }
+
+    public void deleteById(Long id) {
+        if (Objects.nonNull(findById(id))) {
+            repository.deleteById(id);
+        }
     }
 
     public void noBatchUpdate() {

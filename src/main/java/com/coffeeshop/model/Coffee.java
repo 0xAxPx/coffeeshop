@@ -46,6 +46,13 @@ public class Coffee {
         this.address = address;
     }
 
+    public Coffee(Long id, String drink, String description, String address) {
+        this.id = id;
+        this.drink = drink;
+        this.description = description;
+        this.address = address;
+    }
+
     public Coffee() {};
 
 }
