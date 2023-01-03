@@ -2,6 +2,7 @@ plugins {
 	id 'org.springframework.boot' version '2.7.1'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
+	id 'jacoco'
 }
 
 group = 'com.coffeeshop'
@@ -34,6 +35,9 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.testcontainers:junit-jupiter'
 	testImplementation 'org.testcontainers:postgresql'
+	implementation 'org.mockito:mockito-junit-jupiter:4.10.0'
+	implementation 'org.junit.jupiter:junit-jupiter-api:5.9.1'
+
 }
 
 dependencyManagement {
@@ -47,7 +51,14 @@ tasks.named('test') {
 }
 
 test {
-	filter {
-		//excludeTestsMatching "com.coffeeshop.repository.*"
-	}
+	finalizedBy jacocoTestReport
+}
+
+jacoco {
+	toolVersion = "0.8.5"
+	reportsDir = file("$buildDir/jacoco")
+}
+
+jacocoTestReport {
+	dependsOn test
 }
