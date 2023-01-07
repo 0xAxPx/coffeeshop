@@ -19,40 +19,42 @@ import javax.validation.constraints.Size;
 
 @Data
 @Entity
-@Table(name = "coffee_drinks", schema = "barista_owner")
+@Table(name = "beverages", schema = "barista_owner")
 public class Coffee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty(message = "Coffee type can't be empty")
+    @NotEmpty(message = "Beverage can't be empty")
     @Size(min = 5, max = 30)
-    @Column(name = "coffee_drink")
-    private String drink;
+    @Column(name = "beverage")
+    private String name;
 
-    @NotEmpty(message = "Coffee description can't be empty")
-    @Size(min = 5, max = 256)
+    @NotEmpty(message = "Price can't be empty")
+    @Size(min = 5, max = 30)
+    @Column(name = "price")
+    private String price;
+
+    @NotEmpty(message = "Description can't be empty")
+    @Size(min = 5, max = 30)
     @Column(name = "description")
     private String description;
 
-    //Country, City of delivery
-    @Pattern(regexp = "[A-Z]\\+w", message = "Address should be in 'Country, City'")
-    private String address;
 
-    public Coffee(String drink, String description, String address) {
-        this.drink = drink;
+    public Coffee(String name, String price, String description) {
+        this.name = name;
+        this.price = price;
         this.description = description;
-        this.address = address;
     }
 
-    public Coffee(Long id, String drink, String description, String address) {
+    public Coffee(Long id, String name, String price, String description) {
         this.id = id;
-        this.drink = drink;
+        this.name = name;
+        this.price = price;
         this.description = description;
-        this.address = address;
     }
 
-    public Coffee() {};
+    public Coffee() {}
 
 }

@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Component
@@ -30,8 +29,8 @@ public class CoffeeValidator implements Validator {
     @Override
     public void validate(@NotNull Object target, @NonNull Errors errors) {
         Coffee coffee = (Coffee) target;
-        if (service.findByName(coffee.getDrink()) != null ) {
-            errors.rejectValue("drink", "", "This coffee drink is already added");
+        if (service.findByName(coffee.getName()) != null ) {
+            errors.rejectValue("name", "", "This coffee drink is already added");
         }
     }
 }

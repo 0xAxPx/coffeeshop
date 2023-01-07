@@ -1,6 +1,5 @@
 package com.coffeeshop.controller;
 
-
 import com.coffeeshop.model.Coffee;
 import com.coffeeshop.service.CoffeeShopService;
 import com.coffeeshop.utils.CoffeeValidator;
@@ -29,7 +28,7 @@ public class CoffeeShopController {
 
     @GetMapping("/")
     public String viewHomePage(Model model) {
-        return findPaginated(1, "drink", "asc", model);
+        return findPaginated(1, "name", "asc", model);
     }
 
     @GetMapping("/showNewForm")
@@ -76,7 +75,7 @@ public class CoffeeShopController {
                                 @RequestParam("sortField") String sortField,
                                 @RequestParam("sortDir") String sortDir,
                                 Model model) {
-        int pageSize = 200;
+        int pageSize = 5;
         Page<Coffee> page = service.findPaginated(pageNo, pageSize, sortField, sortDir);
         List<Coffee> listCoffee = page.getContent();
         model.addAttribute("currentPage", pageNo);

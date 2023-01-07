@@ -10,28 +10,28 @@
 <body>
 
 	<div class="container my-2">
-	<h1>Coffee List</h1>
-	<a th:href = "@{/showNewForm}" class="btn btn-primary btn-sm mb-3"> Add Coffee </a>
+	<h1>Coffee Beverages</h1>
+	<a th:href = "@{/showNewForm}" class="btn btn-primary btn-sm mb-3"> Add Beverage </a>
 		<table border="1" class = "table table-striped table-responsive-md">
 			<thead>
 				<tr>
 					<th>
-						<a th:href="@{'/page/' + ${currentPage} + '?sortField=drink&sortDir=' + ${reverseSortDir}}">Coffee Type</a>
+						<a th:href="@{'/page/' + ${currentPage} + '?sortField=name&sortDir=' + ${reverseSortDir}}">Beverage</a>
 					</th>
 					<th>
-						<a th:href="@{'/page/' + ${currentPage} + '?sortField=description&sortDir=' + ${reverseSortDir}}">Coffee Description</a>
+						<a th:href="@{'/page/' + ${currentPage} + '?sortField=price&sortDir=' + ${reverseSortDir}}">Price</a>
 					</th>
 					<th>
-						<a th:href="@{'/page/' + ${currentPage} + '?sortField=address&sortDir=' + ${reverseSortDir}}">Address</a>
+						<a th:href="@{'/page/' + ${currentPage} + '?sortField=description&sortDir=' + ${reverseSortDir}}">Description</a>
 					</th>
 					<th> Actions </th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr th:each="coffee : ${listCoffee}">
-					<td th:text="${coffee.drink}"></td>
+					<td th:text="${coffee.name}"></td>
+					<td th:text="${coffee.price}"></td>
 					<td th:text="${coffee.description}"></td>
-					<td th:text="${coffee.address}"></td>
 					<td><a th:href="@{/showFormForUpdate/{id}(id=${coffee.id})}" class="btn btn-primary">Update</a>
 					    <a th:href="@{/deleteCoffee/{id}(id=${coffee.id})}" class="btn btn-danger">Delete</a>
 					</td>

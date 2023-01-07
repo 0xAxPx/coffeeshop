@@ -10,20 +10,28 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
 @Service
-@Transactional(rollbackFor = SQLException.class)
-public class CoffeeShopService implements IShopService<Coffee> {
-    private CoffeeRepository repository;
+@Transactional(readOnly = true)
+public class CoffeeShopService {
+    final private CoffeeRepository repository;
 
     @Autowired
     public CoffeeShopService(CoffeeRepository repository) {
         this.repository = repository;
+    }
+
+    public List<Coffee> findAll() {
+        return repository.findAll();
+    }
+
+    public Coffee findById(Long id) {
+        Optional<Coffee> coffee = repository.findById(id);
+        return coffee.orElse(null);
     }
 
     @Transactional
@@ -33,45 +41,31 @@ public class CoffeeShopService implements IShopService<Coffee> {
         return saved;
     }
 
+    @Transactional
     public Coffee update(Coffee coffee) {
         System.out.format("Updating coffee:%s\n", coffee);
         Coffee updated = null;
         Coffee toUpdate = findById(coffee.getId());
         if (Objects.nonNull(toUpdate)) {
-            toUpdate.setDrink(coffee.getDrink());
+            toUpdate.setName(coffee.getName());
+            toUpdate.setPrice(coffee.getPrice());
             toUpdate.setDescription(coffee.getDescription());
-            toUpdate.setAddress(coffee.getAddress());
             updated = repository.save(coffee);
         }
         return updated;
     }
 
-    @Transactional
-    public List<Coffee> findAll() {
-        return repository.findAll();
-    }
-
-    @Transactional
-    public Coffee findById(Long id) {
-        Optional<Coffee> coffee = repository.findById(id);
-        return coffee.orElse(null);
-    }
-
-    @Override
-    @Transactional
     public Coffee findByName(String name) {
-        Optional<Coffee> coffee = repository.findAll().stream().filter(c -> c.getDrink().equalsIgnoreCase(name)).findFirst();
+        Optional<Coffee> coffee = repository.findAll().stream().filter(c -> c.getName().equalsIgnoreCase(name)).findFirst();
         return coffee.orElse(null);
     }
 
-    @Override
     public Page<Coffee> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection) {
         Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
         return repository.findAll(pageable);
     }
 
-    @Override
     public void deleteAll() {
         repository.deleteAll();
     }
@@ -79,7 +73,7 @@ public class CoffeeShopService implements IShopService<Coffee> {
     @Transactional
     public void delete(Coffee coffee) {
         if (Objects.nonNull(findById(coffee.getId()))) {
-            repository.delete(coffee);
+            repository.deleteById(coffee.getId());
         }
     }
 

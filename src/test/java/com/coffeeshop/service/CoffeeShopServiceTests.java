@@ -23,7 +23,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
-class CoffeeShopServiceDaoTest {
+class CoffeeShopServiceTests {
 
     @InjectMocks
     private CoffeeShopService service;
@@ -38,7 +38,7 @@ class CoffeeShopServiceDaoTest {
 
     @Test
     public void testSaveCoffeeDrink() {
-        Coffee cap = new Coffee("Cap", "Cap Desc", "Cap Address");
+        Coffee cap = new Coffee("Cap", "1.4", "Cap Desc");
         when(repository.save(cap)).thenReturn(cap);
 
         //Test
@@ -50,11 +50,11 @@ class CoffeeShopServiceDaoTest {
     @Test
     public void testFindAll() {
         List<Coffee> coffeeList = new ArrayList<>(5);
-        coffeeList.add(new Coffee("Cap", "Cap Desc", "Cap Address"));
-        coffeeList.add(new Coffee("Mock", "Mock Desc", "Mock Address"));
-        coffeeList.add(new Coffee("Amer", "Amer Desc", "Amer Address"));
-        coffeeList.add(new Coffee("Double", "Double Desc", "Double Address"));
-        coffeeList.add(new Coffee("Ice", "Ice Desc", "Ice Address"));
+        coffeeList.add(new Coffee("Cap", "1.4", "Cap Desc"));
+        coffeeList.add(new Coffee("Mock", "1", "Mock Address"));
+        coffeeList.add(new Coffee("Amer", "1", "Amer Address"));
+        coffeeList.add(new Coffee("Double", "1", "Double Address"));
+        coffeeList.add(new Coffee("Ice", "1", "Ice Address"));
 
         when(repository.findAll()).thenReturn(coffeeList);
 
@@ -66,7 +66,7 @@ class CoffeeShopServiceDaoTest {
 
     @Test
     public void testUpdateCoffee() {
-        Coffee cap = new Coffee(1L,"Cap", "Cap Desc", "Cap Address");
+        Coffee cap = new Coffee(1L,"Cap", "1.4", "Cap Desc");
         when(repository.save(any(Coffee.class))).thenReturn(cap);
         when(repository.findById(cap.getId())).thenReturn(Optional.of(cap));
 
@@ -78,12 +78,13 @@ class CoffeeShopServiceDaoTest {
 
     @Test
     public void testFindById() {
-        Coffee cap = new Coffee("Cap", "Cap Desc", "Cap Address");
+        Coffee cap = new Coffee("Cap", "1.4", "Cap Description");
         when(repository.findById(cap.getId())).thenReturn(Optional.of(cap));
 
         //Test
         Coffee coffee = service.findById(cap.getId());
-        Assertions.assertEquals(coffee.getAddress(), cap.getAddress());
+        Assertions.assertEquals(coffee.getPrice(), cap.getPrice());
+        Assertions.assertEquals(coffee.getDescription(), cap.getDescription());
         verify(repository, times(1)).findById(coffee.getId());
     }
 
@@ -105,7 +106,7 @@ class CoffeeShopServiceDaoTest {
 
     @Test
     public void testDeleteCoffee() {
-        Coffee coffee = new Coffee("Cap", "Cap Desc", "Cap Address");
+        Coffee coffee = new Coffee("Cap", "1.4", "Cap Desc");
         doNothing().when(repository).delete(coffee);
         repository.delete(coffee);
     }
