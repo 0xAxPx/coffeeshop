@@ -25,7 +25,6 @@ import static org.mockito.Mockito.verify;
 @ExtendWith(MockitoExtension.class)
 class CoffeeShopServiceTests {
 
-    @InjectMocks
     private CoffeeShopService service;
 
     @Mock
@@ -34,6 +33,7 @@ class CoffeeShopServiceTests {
     @BeforeEach
     public void init() {
         MockitoAnnotations.openMocks(this);
+        service = new CoffeeShopService(repository);
     }
 
     @Test

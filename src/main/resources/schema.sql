@@ -1,4 +1,3 @@
-delete from barista_owner.orders;
 delete from barista_owner.beverages;
 insert into barista_owner.beverages(beverage, price, description)
 values ('Cappuccino', 1.2, 'This creamy coffee drink is usually consumed at breakfast time in Italy and is loved in the United States as well. It is usually associated with indulgence and comfort because of its thick foam layer and additional flavorings that can be added to it');
